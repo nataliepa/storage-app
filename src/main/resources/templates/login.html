@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang:th="el"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:lang="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:background="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Storage</title>
+    <base href="/">
+    <!-- Bootstrap core CSS -->
+
+    <link rel="shortcut icon"   th:href="@{/img/logistics.png}">
+
+    <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css" th:href="@{/font-awesome/css/font-awesome.css}"/>
+
+
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+
+    <link rel="stylesheet" href="/css/style-responsive.css" th:href="@{/css/style-responsive.css}"/>
+    <link rel="stylesheet" href="/css/clock.css" th:href="@{/css/clock.css}"/>
+
+
+
+
+</head>
+
+
+
+<!--<body th:style="'background-image:url(' + @{/img/login-bg.png} + '); background-repeat: repeat; background-size: cover;'" onload="clock()">-->
+<body th:style="'background-image: url(/img/login-bg.png); background-repeat: repeat; background-size: cover;'" onload="clock()">
+
+<div id="myNav" class="overlay">
+
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+        <a th:href="@{/login}"><span style="color: #d39e00; font-size: 45px;"><center>Storage </center></span></a>
+        <center> <a th:href="@{/login}" id="showtime">Storage</a> </center>
+    </div>
+</div>
+
+<div id="login-page">
+    <div class="container">
+
+        <form class="form-login" th:action="@{/login}" method="post" id="formLogin">
+            <h2 class="form-login-heading">Συνδεθείτε</h2>
+            <div class="login-wrap">
+                <br>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger" style="text-align: center">Παρακαλώ ελέγξτε τα διαπιστευτήρια σας.</div>
+                </div>
+                <div th:if="${param.logout}"   id="logoutmsg">
+                    <div class="alert alert-info" style="background-color:orange;  color: black; text-align: center">
+                        Αποσυνδεθήκατε.
+                    </div>
+                </div>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <input class="form-control"  type="text" id="username" name="username" style="text-align: center"
+                      placeholder="όνομα χρήστη" required="required">
+
+                <br>
+                <input class="form-control"  type="password" id="password" name="password" style="text-align: center"
+                       placeholder="κωδικός πρόσβασης" required="required">
+
+
+                <br>
+                <button class="btn btn-theme btn-block" type="submit" required="required"><i class="fa fa-lock"></i> Σύνδεση</button>
+                <hr>
+
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="text-center">
+        2022 - Διαχείριση Αποθηκών
+    </div>
+</footer>
+
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+
+
+<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/clock.js}"></script>
+
+
+
+
+</body>
+</html>

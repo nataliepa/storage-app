@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang:th="el"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:lang="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:background="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <title>Storage</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="shortcut icon"   th:href="@{/img/logistics.png}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css" th:href="@{/font-awesome/css/font-awesome.css}"/>
+    <!--external css-->
+    <link rel="stylesheet" href="/css/zabuto_calendar.css" th:href="@{/css/zabuto_calendar.css}"/>
+    <link rel="stylesheet" href="/js/gritter/css/jquery.gritter.css" th:href="@{/js/gritter/css/jquery.gritter.css}"/>
+    <link rel="stylesheet" href="/lineicons/style.css" th:href="@{/lineicons/style.css}"/>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="/css/style-responsive.css" th:href="@{/css/style-responsive.css}"/>
+    <script type="text/javascript" th:src="@{/js/chart-master/Chart.js}"></script>
+    <script type="text/javascript" th:src="@{/js/html5shiv.js}"></script>
+    <script type="text/javascript" th:src="@{/js/respond.min.js}"></script>
+
+</head>
+
+<body>
+
+<section id="container">
+
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="μενού"></div>
+        </div>
+
+        <a href="#" class="logo"><b>Storage</b></a>
+
+
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li><a class="logout" th:href="@{/logout}">Αποσύνδεση</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <object type="text/html" th:replace="menu.html :: sidebar" ></object>
+
+
+    <section id="main-content"  sec:authorize="hasAnyAuthority('SuperAdmin')">
+        <section class="wrapper">
+            <h3 style="background: #ff865c; color: #ffffff; line-height: 60px ;"><i class="fa fa-angle-right"></i> Επεξεργασία χρήστη</h3>
+
+
+
+        <form autocomplete="off" th:object="${userForm}"
+              th:action="${'/storage/users/edit/'+userForm.getId()}"
+             method="POST"
+                    class="form-horizontal tasi-form" >
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="form-group has-success">
+                            <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Όνομα</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="inputSuccess" th:field="*{firstname}"
+                                       title="Όνομα"
+                                       autofocus="true" required="required" maxlength="50">
+                            </div>
+                        </div>
+
+            <div class="form-group has-success">
+                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Επίθετο</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputSuccess" th:field="*{lastname}"
+                           title="Επίθετο"
+                           autofocus="true" required="required" maxlength="50">
+                </div>
+            </div>
+
+
+            <div class="form-group has-success">
+                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Σχόλια</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputSuccess" th:field="*{comments}"
+                           title="Σχόλια"
+                           autofocus="true"  maxlength="50">
+                </div>
+            </div>
+
+
+            <div class="form-group has-success" >
+                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Ρόλος</label>
+                <div class="col-lg-10">
+                    <select th:field="*{roleByUserrole}" required="required" th:disabled="${userForm.id ==1}" >
+                        <option th:each="r : ${role}"
+                                th:value="${r.getId()}"
+                                th:text="${r.getName()}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group has-success">
+                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Αποθήκη</label>
+                <div class="col-lg-10">
+                    <select th:field="*{storeByStoreId}" required="required">
+                        <option th:each="s : ${stores}"
+                                th:value="${s.getId()}"
+                                th:text="${s.getTitle()}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group has-success">
+                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess" >Νέος κωδικός</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputSuccess" name="password"
+                            placeholder="νέος κωδικός πρόσβασης"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,}$"
+                           autofocus="true"  oninput="showInfo()" >
+                    <label id="showInfo" style="display: none; color: #f0ad4e; text-align: justify;"> &nbsp; Ο νέος κωδικός να εγγραφεί στην λατινική, απο τουλάχιστον 5 χαρακτήρες, με τουλάχιστον 1
+                        κεφαλαίο γράμμα, 1 μικρό γράμμα, 1 αριθμό και 1 ειδικό χαρακτήρα {@ $ ! % * ? &} </label>
+                </div>
+            </div>
+
+
+            <div class="form-group has-success" >
+                <div class="col-lg-10" th:if="${userForm.id !=1}">
+                    <input  type="checkbox" id="demo-priority-small" value="checkboxVisible"  name="checkboxVisible"  th:checked="${userForm.enable == 1}" />
+
+                    <label for="demo-priority-small">Ενεργός Λογαριασμός</label>
+                    <br>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Αποθήκευση</button>
+
+        </form>
+
+        </section>
+    </section>
+
+
+
+
+</section>
+
+<script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script class="include" type="text/javascript" th:src="@{/js/jquery.dcjqaccordion.2.7.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/jquery.scrollTo.min.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/js/common-scripts.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/js/gritter/js/jquery.gritter.js}"></script>
+
+
+
+<script type="application/javascript">
+
+
+
+function  showInfo() {
+
+    document.getElementById("showInfo").style.display = "block";
+
+}
+
+
+</script>
+
+
+</body>
+</html>

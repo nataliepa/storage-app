@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang:th="el"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:lang="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:background="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Storage</title>
+    <base href="/">
+    <!-- Bootstrap core CSS -->
+
+    <link rel="shortcut icon"   th:href="@{/img/logistics.png}">
+
+    <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css" th:href="@{/font-awesome/css/font-awesome.css}"/>
+
+
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+
+    <link rel="stylesheet" href="/css/style-responsive.css" th:href="@{/css/style-responsive.css}"/>
+
+
+
+
+</head>
+
+
+
+<body th:style="'background-image:url(' + @{/img/login-bg.png} + '); background-repeat: no-repeat; background-size: cover;'">
+
+
+
+<div id="login-page">
+    <div class="container"  onclick="goIndex()">
+
+        <div class="form-login"  style=" cursor: pointer;">
+
+            <div class="login-wrap">
+                <br>
+                <div>
+                    <div class="alert alert-danger">Παρουσιάστηκε κάποιο σφάλμα ή δεν έχετε εξουσιοδότησή για αυτήν την ενέργεια.</div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+
+
+<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
+
+<script>
+function goIndex() {
+
+    window.location.replace(href = "/storage/index");
+}
+</script>
+
+</body>
+</html>
